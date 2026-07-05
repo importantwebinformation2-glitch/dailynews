@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Daily Wire — Live Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;900&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#ECE3D0;
+    --paper-deep:#E2D6BC;
+    --ink:#201C16;
+    --ink-soft:#4A4238;
+    --masthead:#7E2A2A;
+    --wire:#2F5468;
+    --rule-gold:#A9865A;
+    --new-badge:#3E6B4F;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background-color:var(--paper);
+    background-image:
+      url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/></svg>");
+    color:var(--ink);
+    font-family:'Source Serif 4', serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .dateline{
+    text-align:center;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    padding-top:16px;
+  }
+  .grid > article.card:first-child .snippet::first-letter{
+    font-family:'Playfair Display', serif;
+    font-weight:900;
+    font-size:2.8rem;
+    float:left;
+    line-height:0.8;
+    padding:4px 8px 0 0;
+    color:var(--masthead);
+  }
+  a{color:inherit;text-decoration:none;}
+  .sans{font-family:'IBM Plex Sans', sans-serif;}
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  /* ---------- Masthead ---------- */
+  header.masthead{
+    text-align:center;
+    padding:28px 16px 14px;
+    border-bottom:4px double var(--ink);
+  }
+  .masthead h1{
+    font-family:'Playfair Display', serif;
+    font-weight:900;
+    font-size:clamp(2.4rem, 7vw, 4.2rem);
+    letter-spacing:1px;
+    margin:0;
+    color:var(--masthead);
+  }
+  .masthead .tagline{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:3px;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+  .edition-bar{
+    display:flex;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:6px 18px;
+    max-width:1100px;
+    margin:12px auto 0;
+    padding:6px 12px 0;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.72rem;
+    letter-spacing:0.5px;
+    color:var(--ink-soft);
+    border-top:1px solid var(--rule-gold);
+  }
+  .live-dot{
+    display:inline-block;width:7px;height:7px;border-radius:50%;
+    background:#c0392b;margin-right:6px;
+    animation:pulse 1.6s infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.25;}}
+
+  /* ---------- Nav ---------- */
+  nav.sections{
+    background:var(--ink);
+    position:sticky;top:0;z-index:50;
+  }
+  nav.sections ul{
+    list-style:none;margin:0;padding:0;
+    display:flex;flex-wrap:wrap;justify-content:center;
+  }
+  nav.sections a{
+    display:block;
+    padding:11px 18px;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.8rem;
+    letter-spacing:1.5px;
+    text-transform:uppercase;
+    color:var(--paper);
+    border-right:1px solid rgba(255,255,255,0.15);
+    transition:background 0.2s;
+  }
+  nav.sections a:hover{background:var(--masthead);}
+
+  /* ---------- Wire ticker (signature element) ---------- */
+  .ticker-wrap{
+    background:var(--wire);
+    color:var(--paper);
+    overflow:hidden;
+    white-space:nowrap;
+    border-bottom:2px solid var(--ink);
+    position:relative;
+  }
+  .ticker-label{
+    position:absolute;left:0;top:0;bottom:0;
+    background:var(--ink);
+    display:flex;align-items:center;
+    padding:0 14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.7rem;letter-spacing:2px;
+    z-index:2;
+  }
+  .ticker-track{
+    display:inline-block;
+    padding-left:150px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.82rem;
+    animation:scroll-left 55s linear infinite;
+  }
+  .ticker-track span{margin-right:48px;}
+  @keyframes scroll-left{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .ticker-track{animation:none;}
+    .live-dot{animation:none;}
+  }
+
+  /* ---------- Layout ---------- */
+  main{max-width:1100px;margin:0 auto;padding:0 16px 60px;}
+  .desk{padding-top:34px;}
+  .desk-title{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    font-size:1.6rem;
+    color:var(--masthead);
+    border-bottom:3px solid var(--ink);
+    padding-bottom:6px;
+    margin-bottom:18px;
+    display:flex;justify-content:space-between;align-items:baseline;
+  }
+  .desk-title .desk-status{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.68rem;
+    color:var(--ink-soft);
+    text-transform:none;
+    letter-spacing:0.3px;
+  }
+  .grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:26px;}
+  .grid.two-col{grid-template-columns:1fr 1fr;}
+  @media(max-width:820px){
+    .grid, .grid.two-col{grid-template-columns:1fr;}
+  }
+  article.card{
+    border-bottom:1px solid var(--rule-gold);
+    padding-bottom:16px;
+  }
+  .grid > article.card:first-child{
+    grid-row: span 2;
+    border-right:1px solid var(--rule-gold);
+    padding-right:22px;
+  }
+  @media(max-width:820px){
+    .grid > article.card:first-child{border-right:none;padding-right:0;grid-row:auto;}
+  }
+  .card h3{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    line-height:1.25;
+    margin:0 0 8px;
+    font-size:1.05rem;
+  }
+  .grid > article.card:first-child h3{font-size:1.55rem;}
+  .card p.snippet{
+    margin:0 0 8px;
+    font-size:0.92rem;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .card .meta{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.68rem;
+    letter-spacing:0.5px;
+    text-transform:uppercase;
+    color:var(--wire);
+  }
+  .badge-new{
+    background:var(--new-badge);
+    color:var(--paper);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.6rem;
+    letter-spacing:1px;
+    padding:1px 6px;
+    border-radius:2px;
+    margin-right:6px;
+    vertical-align:middle;
+  }
+  .desk-error{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.85rem;
+    color:var(--ink-soft);
+    font-style:italic;
+  }
+  .skeleton{
+    height:14px;background:var(--paper-deep);
+    border-radius:2px;margin-bottom:8px;
+    animation:shimmer 1.3s infinite ease-in-out;
+  }
+  @keyframes shimmer{0%,100%{opacity:0.5;}50%{opacity:1;}}
+
+  footer{
+    text-align:center;
+    padding:26px 16px 40px;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.72rem;
+    color:var(--ink-soft);
+    border-top:4px double var(--ink);
+  }
+  footer button{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    background:var(--masthead);
+    color:var(--paper);
+    border:none;
+    padding:9px 18px;
+    border-radius:2px;
+    cursor:pointer;
+    margin-top:10px;
+  }
+  footer button:hover{background:var(--ink);}
+  :focus-visible{outline:2px solid var(--masthead);outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <h1>The Daily Wire</h1>
+  <div class="tagline">Assembled automatically &middot; refreshed around the clock</div>
+  <div class="edition-bar">
+    <span id="editionLabel">Vol. — · No. —</span>
+    <span><span class="live-dot"></span>LIVE — last checked <span id="lastChecked">—</span></span>
+  </div>
+</header>
+<div class="dateline" id="datelineRow">Assembled automatically from open wire feeds — refreshes every 10 minutes</div>
+
+<nav class="sections" aria-label="News sections">
+  <ul id="navList"></ul>
+</nav>
+
+<div class="ticker-wrap">
+  <div class="ticker-label">WIRE</div>
+  <div class="ticker-track" id="tickerTrack">
+    <span>Gathering the latest headlines&hellip;</span>
+  </div>
+</div>
+
+<main id="mainContent"></main>
+
+<footer>
+  <div>The Daily Wire pulls public headlines from BBC, Times of India and other open feeds every 10 minutes.</div>
+  <div>Not affiliated with the original publishers — each headline links back to the source.</div>
+  <button id="refreshBtn">Refresh now</button>
+</footer>
+
+<script>
+(function(){
+  // ---- Configuration: add, remove, or swap feeds here ----
+  const DESKS = [
+    { id:'world',       label:'World',         feed:'http://feeds.bbci.co.uk/news/world/rss.xml' },
+    { id:'national',    label:'National',      feed:'https://timesofindia.indiatimes.com/rssfeeds/296589292.cms' },
+    { id:'business',    label:'Business',      feed:'http://feeds.bbci.co.uk/news/business/rss.xml' },
+    { id:'technology',  label:'Technology',    feed:'http://feeds.bbci.co.uk/news/technology/rss.xml' },
+    { id:'sports',      label:'Sports',        feed:'http://feeds.bbci.co.uk/sport/rss.xml' },
+    { id:'entertainment', label:'Entertainment', feed:'http://feeds.bbci.co.uk/news/entertainment_and_arts/rss.xml' }
+  ];
+  const REFRESH_MS = 10 * 60 * 1000; // 10 minutes
+
+  // Raw-XML proxies tried in order (corsproxy.io is free & unlimited for github.io domains)
+  const RAW_PROXIES = [
+    url => 'https://corsproxy.io/?url=' + encodeURIComponent(url),
+    url => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(url),
+    url => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(url)
+  ];
+
+  async function fetchFeedItems(feedUrl){
+    let lastErr = null;
+
+    for(const buildProxy of RAW_PROXIES){
+      try{
+        const res = await fetch(buildProxy(feedUrl));
+        if(!res.ok) throw new Error('HTTP ' + res.status);
+        const xmlText = await res.text();
+        const xml = new DOMParser().parseFromString(xmlText, 'text/xml');
+        if(xml.querySelector('parsererror')) throw new Error('unparsable response');
+        const nodes = Array.from(xml.querySelectorAll('item'));
+        if(!nodes.length) throw new Error('no items in feed');
+        const feedTitle = xml.querySelector('channel > title')?.textContent || '';
+        return nodes.map(n => ({
+          title: n.querySelector('title')?.textContent || '',
+          link: n.querySelector('link')?.textContent || '',
+          pubDate: n.querySelector('pubDate')?.textContent || '',
+          description: n.querySelector('description')?.textContent || '',
+          source: feedTitle
+        }));
+      }catch(e){ lastErr = e; }
+    }
+
+    // Last resort: rss2json (JSON API, separate rate-limit pool)
+    try{
+      const res = await fetch('https://api.rss2json.com/v1/api.json?rss_url=' + encodeURIComponent(feedUrl));
+      if(res.ok){
+        const data = await res.json();
+        if(data.items && data.items.length){
+          return data.items.map(it => ({
+            title: it.title, link: it.link, pubDate: it.pubDate,
+            description: it.description, source: (data.feed && data.feed.title) || ''
+          }));
+        }
+      }
+    }catch(e){ lastErr = e; }
+
+    throw lastErr || new Error('all proxies failed');
+  }
+
+  const state = {}; // deskId -> { items: [...], links:Set, error:bool }
+  DESKS.forEach(d => state[d.id] = { items:[], links:new Set(), error:false, errorMsg:'', loading:true });
+
+  // ---- Build nav ----
+  const navList = document.getElementById('navList');
+  DESKS.forEach(d=>{
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.href = '#desk-' + d.id;
+    a.textContent = d.label;
+    li.appendChild(a);
+    navList.appendChild(li);
+  });
+
+  // ---- Build desk sections (skeleton first) ----
+  const main = document.getElementById('mainContent');
+  DESKS.forEach(d=>{
+    const section = document.createElement('section');
+    section.className = 'desk';
+    section.id = 'desk-' + d.id;
+    section.innerHTML = `
+      <div class="desk-title">${d.label}
+        <span class="desk-status" data-status="${d.id}">loading…</span>
+      </div>
+      <div class="grid" data-grid="${d.id}">
+        ${Array.from({length:3}).map(()=>`<div><div class="skeleton" style="width:80%"></div><div class="skeleton" style="width:60%"></div></div>`).join('')}
+      </div>`;
+    main.appendChild(section);
+  });
+
+  // ---- Edition number (Vol = years since 1990, No = day of year) ----
+  function toRoman(num){
+    const map=[[1000,'M'],[900,'CM'],[500,'D'],[400,'CD'],[100,'C'],[90,'XC'],[50,'L'],[40,'XL'],[10,'X'],[9,'IX'],[5,'V'],[4,'IV'],[1,'I']];
+    let out='';
+    for(const [v,s] of map){ while(num>=v){out+=s; num-=v;} }
+    return out;
+  }
+  function setEdition(){
+    const now = new Date();
+    const start = new Date(now.getFullYear(),0,0);
+    const dayOfYear = Math.floor((now - start)/86400000);
+    const vol = toRoman(now.getFullYear()-1990);
+    const dateStr = now.toLocaleDateString(undefined,{weekday:'long', year:'numeric', month:'long', day:'numeric'});
+    document.getElementById('editionLabel').textContent = `Vol. ${vol} · No. ${dayOfYear} — ${dateStr}`;
+  }
+  function setLastChecked(){
+    document.getElementById('lastChecked').textContent = new Date().toLocaleTimeString();
+  }
+
+  function stripHtml(str){
+    const tmp = document.createElement('div');
+    tmp.innerHTML = str || '';
+    return tmp.textContent || tmp.innerText || '';
+  }
+  function timeAgo(dateStr){
+    const diffMs = Date.now() - new Date(dateStr).getTime();
+    const mins = Math.round(diffMs/60000);
+    if(mins < 1) return 'just now';
+    if(mins < 60) return mins + ' min ago';
+    const hrs = Math.round(mins/60);
+    if(hrs < 24) return hrs + ' hr ago';
+    return Math.round(hrs/24) + ' d ago';
+  }
+
+  async function loadDesk(desk){
+    const st = state[desk.id];
+    try{
+      const items = await fetchFeedItems(desk.feed);
+      if(!items.length) throw new Error('empty feed');
+
+      const incoming = items.slice(0, 9).map(it=>({
+        title: it.title,
+        link: it.link,
+        pubDate: it.pubDate,
+        snippet: stripHtml(it.description).slice(0,150),
+        source: it.source || desk.label,
+        isNew: !st.links.has(it.link) && st.links.size > 0
+      }));
+
+      incoming.forEach(it => st.links.add(it.link));
+      st.items = incoming;
+      st.error = false;
+      st.errorMsg = '';
+    }catch(e){
+      st.error = true;
+      st.errorMsg = (e && e.message) ? e.message : 'unknown error';
+    }
+    st.loading = false;
+    render(desk);
+  }
+
+  function render(desk){
+    const st = state[desk.id];
+    const grid = document.querySelector(`[data-grid="${desk.id}"]`);
+    const status = document.querySelector(`[data-status="${desk.id}"]`);
+    status.textContent = st.error ? 'wire interrupted' : 'updated ' + new Date().toLocaleTimeString();
+
+    if(st.error && st.items.length === 0){
+      grid.innerHTML = `<div class="desk-error">Couldn't reach this desk's wire feed — will retry automatically.<br><span class="mono" style="font-size:0.7rem;opacity:0.7;">Detail: ${st.errorMsg || 'unknown'}</span></div>`;
+      return;
+    }
+    grid.className = 'grid' + (desk.id==='business'||desk.id==='technology'||desk.id==='sports'||desk.id==='entertainment' ? ' two-col' : '');
+    grid.innerHTML = st.items.map(it=>`
+      <article class="card">
+        <h3>${it.isNew ? '<span class="badge-new">NEW</span>' : ''}<a href="${it.link}" target="_blank" rel="noopener">${it.title}</a></h3>
+        <p class="snippet">${it.snippet}${it.snippet.length===150?'…':''}</p>
+        <div class="meta">${it.source} — ${timeAgo(it.pubDate)}</div>
+      </article>
+    `).join('');
+  }
+
+  function updateTicker(){
+    const headlines = DESKS.flatMap(d => state[d.id].items.slice(0,2).map(it => `${d.label.toUpperCase()}: ${it.title}`));
+    if(!headlines.length) return;
+    const track = document.getElementById('tickerTrack');
+    const doubled = headlines.concat(headlines); // seamless loop
+    track.innerHTML = doubled.map(h => `<span>${h}</span>`).join('');
+  }
+
+  async function refreshAll(){
+    setLastChecked();
+    await Promise.all(DESKS.map(loadDesk));
+    updateTicker();
+  }
+
+  document.getElementById('refreshBtn').addEventListener('click', refreshAll);
+
+  setEdition();
+  refreshAll();
+  setInterval(refreshAll, REFRESH_MS);
+  setInterval(setLastChecked, 30000);
+})();
+</script>
+
+</body>
+</html>
