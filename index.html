@@ -209,6 +209,15 @@
     text-transform:uppercase;
     color:var(--wire);
   }
+  .card .read-more{
+    display:inline-block;
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:0.72rem;
+    letter-spacing:0.3px;
+    color:var(--masthead);
+    margin-bottom:8px;
+  }
+  .card .read-more:hover{text-decoration:underline;}
   .badge-new{
     background:var(--new-badge);
     color:var(--paper);
@@ -423,7 +432,7 @@
         title: it.title,
         link: it.link,
         pubDate: it.pubDate,
-        snippet: stripHtml(it.description).slice(0,150),
+        snippet: stripHtml(it.description).slice(0,420),
         source: it.source || desk.label,
         isNew: !st.links.has(it.link) && st.links.size > 0
       }));
@@ -454,7 +463,8 @@
     grid.innerHTML = st.items.map(it=>`
       <article class="card">
         <h3>${it.isNew ? '<span class="badge-new">NEW</span>' : ''}<a href="${it.link}" target="_blank" rel="noopener">${it.title}</a></h3>
-        <p class="snippet">${it.snippet}${it.snippet.length===150?'…':''}</p>
+        <p class="snippet">${it.snippet}${it.snippet.length===420?'…':''}</p>
+        <a class="read-more" href="${it.link}" target="_blank" rel="noopener">Continue reading at source →</a>
         <div class="meta">${it.source} — ${timeAgo(it.pubDate)}</div>
       </article>
     `).join('');
